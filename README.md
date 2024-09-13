@@ -1,1 +1,127 @@
-# Momo-Api-toolkit
+# Momo API Testing Toolkit and Node.js Server
+
+## Overview
+
+This project contains two key components:
+1. **API Testing Tool**: A Unix-based command-line tool for simplifying the configuration and usage of the MTN MoMo API.
+2. **Node.js Server** (located in the `momo` folder): A lightweight server designed to reduce the complexity of configuring and making API calls to MoMo.
+
+## API Testing Tool
+
+The **API Testing Tool** (`momotoolkit`) is a command-line utility aimed at making it easier to configure and interact with MoMo's API Sandbox. The tool facilitates faster sandbox user configuration and creation, allowing you to focus on API usage rather than manual setup.
+
+### Features
+
+- **Fast Configuration**: Set up your MoMo Sandbox account quickly with the required subscription key and credentials.
+- **API Requests**: Make payment, withdrawal, balance, and token requests directly from the terminal.
+- **Automatic .env File Generation**: The tool automatically generates the necessary `.env` configuration file for use with MoMo API calls.
+
+### Requirements
+
+- A **Subscription API Key** from [MoMo Developer](https://momodeveloper.mtn.com/).
+- A Unix or WSL (Windows Subsystem for Linux) environment to run the tool.
+
+### Installation
+
+Make sure the tool has execution permission by running:
+
+```bash
+chmod +x ./momotoolkit
+```
+
+### Usage
+
+Run the tool from a terminal in the directory that contains the `momo_be` folder:
+
+```bash
+./momotoolkit
+```
+
+If you do not have execution permission, follow the above steps to grant permission.
+
+### Key Features
+
+- **Subscription Key**: Your MoMo API key, obtained from the MoMo Developer portal.
+- **Reference ID**: The ID of a sandbox user created in MoMo.
+- **API Key**: The authentication password for your sandbox user.
+- **Access Token**: The authentication token for making API requests without the need for passwords.
+  
+These keys and tokens are generated and stored in a `.env` file in the `momo_be` folder. Ensure that the tool is always run in the directory containing the `momo_be` folder.
+
+### Tool Workflow
+
+1. The tool will prompt you to enter your subscription key, or you can use saved data if it exists.
+2. Based on your input, the tool will configure and save your MoMo API credentials in the `.env` file.
+3. Once configured, you can use the API Testing Tool to make requests such as payment, withdrawal, or token generation.
+
+## Node.js Server (in `momo` folder)
+
+The Node.js server, located in the `momo` folder, provides an abstraction layer for interacting with the MTN MoMo API. It simplifies API requests by reducing the number of required configurations, making it easier to send calls to the MoMo API.
+
+### Features
+
+- **Simple API Requests**: The server allows you to make requests to the MoMo API without manually configuring every detail.
+- **Sandbox Integration**: Works seamlessly with the MoMo API Sandbox, using credentials created via the API Testing Tool.
+- **RESTful Endpoints**: Supports POST and GET requests for initiating payments, checking statuses, viewing balances, and more.
+
+### Usage of the api
+
+1. Navigate to the `momo` folder.
+2. Install the required dependencies using:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the server:
+
+   ```bash
+   npm run dev
+   ```
+
+The server will now be running
+
+Your Express server is set up to handle payments, withdrawals, and token management using the MTN MoMo API in a sandbox environment. Key points in your code include:
+
+1. **Payment Requests**:
+   - The `/api/request-payment` route handles MoMo payment requests, with a generated UUID for each transaction.
+   - After the request, it optionally checks the payment status instantly if the environment variable `REQUIRE_INSTANT_PAY` is set to `true`.
+
+2. **Checking Payment Status**:
+   - The `/api/payment-status/:referenceId` endpoint allows checking the status of a specific payment using its `referenceId`.
+
+3. **Balance Inquiry**:
+   - The `/api/view-balance` endpoint retrieves the balance of the MoMo account.
+
+4. **Withdrawal Requests**:
+   - The `/api/request-withdrawal` route handles withdrawal requests using the MoMo API.
+
+5. **Generating New Tokens**:
+   - The `/api/generate-token` route generates a new authorization token for the MoMo API and updates the `.env` file.
+
+6. **Withdrawal Status**:
+   - The `/api/withdrawal-status/:referenceId` endpoint checks the status of a withdrawal request.
+
+7. **Callbacks**:
+   - A `/callback` endpoint handles POST and PUT callbacks from the MoMo API.
+
+### Key Suggestions
+
+- Ensure that your `.env` file contains the correct values for `ACCESS_TOKEN`, `SUBSCRIPTION_KEY`, `API_KEY`, `REFERENCE_ID`, and any other required environment variables.
+- Since you are working in the sandbox, you may want to make sure that the MoMo sandbox environment is up and running correctly for API requests.
+- Add logging to critical sections to help with debugging.
+
+### Configuration
+
+Ensure the `.env` file generated by the **API Testing Tool** is available in the `momo` folder when running the server. This file contains all necessary API keys, reference IDs, and tokens.
+
+## Conclusion
+
+This project simplifies the interaction with MTN MoMo's API by providing a robust **API Testing Tool** and a streamlined **Node.js Server**. The goal is to reduce the complexities of API configuration and allow developers to focus on building and testing their applications.
+
+## Author
+
+**Geno Yves Cadiot**  
+GitHub: [genocadio](https://github.com/genocadio)
+
+---

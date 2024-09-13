@@ -43,7 +43,7 @@ app.post('/api/request-payment', async (req, res) => {
                 'Ocp-Apim-Subscription-Key': process.env.SUBSCRIPTION_KEY, // Ensure this matches the provided subscription key
                 'Content-Type': 'application/json',
                 'X-Target-Environment': 'sandbox', // Ensure this matches the target environment
-                // 'X-Callback-Url': `http://${process.env.CALLBACK_URL}/callback` // Set callback URL here (commented out for debugging)
+                'X-Callback-Url': `http://${process.env.CALLBACK_URL}/callback` // Set callback URL here (commented out for debugging)
             }
         });
 
